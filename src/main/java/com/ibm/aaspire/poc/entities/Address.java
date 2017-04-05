@@ -1,5 +1,6 @@
 package com.ibm.aaspire.poc.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,6 +21,7 @@ public class Address {
 	@Enumerated(EnumType.STRING)
 	private State state;
 
+	@Column(name="post_code")
 	private String postCode;
 
 	private String country;
