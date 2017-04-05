@@ -2,6 +2,7 @@ package com.ibm.aaspire.poc.entities;
 
 import java.sql.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -11,17 +12,18 @@ import javax.persistence.OneToOne;
 @Entity
 public class Member {
 	
-	
 	@Id
 	private String id;
 
 	private String title;
 
+	@Column(name="given_name")
 	private String givenName;
 
 	private String surname;
 
-	private Date dataOfBirth;
+	@Column(name="date_of_birth")
+	private Date dateOfBirth;
 
 	@Enumerated(EnumType.STRING)
 	private MemberStatus status;
@@ -31,6 +33,7 @@ public class Member {
 	@OneToOne
 	private Address address;
 	
+	@Column(name="phone_number")
 	private String phoneNumber;
 
 	public String getTitle() {
@@ -57,12 +60,12 @@ public class Member {
 		this.surname = surname;
 	}
 
-	public Date getDataOfBirth() {
-		return dataOfBirth;
+	public Date getDateOfBirth() {
+		return dateOfBirth;
 	}
 
-	public void setDataOfBirth(Date dataOfBirth) {
-		this.dataOfBirth = dataOfBirth;
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 	}
 
 	public MemberStatus getStatus() {
@@ -96,8 +99,13 @@ public class Member {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	
-	
-	
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 }
 
