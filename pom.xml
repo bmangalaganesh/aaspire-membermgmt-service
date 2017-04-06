@@ -66,6 +66,18 @@
 			<version>21.0</version>
 		</dependency>
 
+		<!-- To use Spring Cloud Connectors for development -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-localconfig-connector</artifactId>
+		</dependency>
+
+		<!-- If you intend to deploy the app to Cloud Foundry -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-cloudfoundry-connector</artifactId>
+		</dependency>
+
 
 	</dependencies>
 
