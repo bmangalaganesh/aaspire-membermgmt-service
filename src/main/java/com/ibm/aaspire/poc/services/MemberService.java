@@ -62,7 +62,8 @@ public class MemberService {
 	}
 	
 	private String termSubquery(String term, int i) {
-		return String.format("LOWER(CONCAT(m.givenName, "
+		return String.format("LOWER(CONCAT(m.id, "
+				+ "m.givenName, "
 				+ "m.surname, "
 				+ "m.email, "
 				+ "m.phoneNumber, "
