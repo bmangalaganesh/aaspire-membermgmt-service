@@ -2,6 +2,7 @@ package com.ibm.aaspire.poc.entities;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,32 +12,49 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Member {
-	
+
 	@Id
 	private String id;
 
 	private String title;
 
-	@Column(name="given_name")
+	@Column(name = "given_name")
 	private String givenName;
 
 	private String surname;
 
-	@Column(name="date_of_birth")
+	@Column(name = "date_of_birth")
 	private Date dateOfBirth;
 
 	@Enumerated(EnumType.STRING)
 	private MemberStatus status;
 
 	private String plan;
-	
+
 	private String email;
 
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
 	private Address address;
-	
-	@Column(name="phone_number")
+
+	@Column(name = "phone_number")
 	private String phoneNumber;
+
+	public Member(String id, String title, String givenName, String surname, Date dateOfBirth, MemberStatus status,
+			String plan, String email, Address address, String phoneNumber) {
+		setId(id);
+		setTitle(title);
+		setGivenName(givenName);
+		setSurname(surname);
+		setDateOfBirth(dateOfBirth);
+		setStatus(status);
+		setPlan(plan);
+		setEmail(email);
+		setAddress(address);
+		setPhoneNumber(phoneNumber);
+	}
+	
+	public Member() {
+	}
 
 	public String getTitle() {
 		return title;
@@ -101,7 +119,7 @@ public class Member {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	
+
 	public String getPlan() {
 		return plan;
 	}
@@ -118,4 +136,3 @@ public class Member {
 		this.id = id;
 	}
 }
-
