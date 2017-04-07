@@ -28,6 +28,8 @@ public class Member {
 	@Enumerated(EnumType.STRING)
 	private MemberStatus status;
 
+	private String plan;
+	
 	private String email;
 
 	@OneToOne
@@ -98,6 +100,14 @@ public class Member {
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+	
+	public String getPlan() {
+		return plan;
+	}
+
+	public void setPlan(String plan) {
+		this.plan = plan;
 	}
 
 	public String getId() {
