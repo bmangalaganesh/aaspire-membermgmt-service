@@ -26,6 +26,19 @@ public class Address {
 
 	private String country;
 
+	public Address(String id, String line1, String line2, String suburb, State state, String postCode, String country) {
+		setId(id);
+		setLine1(line1);
+		setLine2(line2);
+		setSuburb(suburb);
+		setState(state);
+		setPostCode(postCode);
+		setCountry(country);
+	}
+
+	public Address() {
+	}
+	
 	public String getLine1() {
 		return line1;
 	}
