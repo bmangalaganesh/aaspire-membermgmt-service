@@ -7,7 +7,6 @@ applications:
   memory: 512M
   buildpack: liberty-for-java
   domain: mybluemix.net
-  
   services:
   - memberservices-postgres
   
