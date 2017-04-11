@@ -28,23 +28,25 @@ public class MemberServiceTest {
 
 	@Autowired
 	private MemberRepository repo;
+	
+	private Member member1;	
+	private Member member2;
+	private Member member3;
 
 	@Before
 	public void populateDb() {
 		repo.deleteAll();
-		repo.save(new Member("uuid1", 
-				"Mr", 
+		member1 = repo.save(new Member("Mr", 
 				null, 
 				"Johnston", 
 				null, 
 				ACTIVE, 
 				null, 
 				"jj@gmail.com",
-				new Address("1", "Carlton North", null, "Carlton", VIC, null, null), 
+				new Address("Carlton North", null, "Carlton", VIC, null, null), 
 				"18800-1"));
 
-		repo.save(new Member("uuid2", 
-				"Mr", 
+		member2 = repo.save(new Member("Mr", 
 				"Nikolay", 
 				"Grozev", 
 				null, 
@@ -54,15 +56,14 @@ public class MemberServiceTest {
 				null, 
 				"18800-2"));
 
-		repo.save(new Member("uuid3", 
-				null, 
+		member3 = repo.save(new Member(null, 
 				"Peter", 
 				"Pan", 
 				null, 
 				ACTIVE, 
 				null, 
 				"pp@gmail.com",
-				new Address("3", "765 Brunswick", null, "Carlton", VIC, null, null), 
+				new Address("765 Brunswick", null, "Carlton", VIC, null, null), 
 				"18800-3"));	
 	}
 	
@@ -70,54 +71,54 @@ public class MemberServiceTest {
 	public void testSearchByFirstName() {
 		List<String> loadedIds = search("nikol");
 		assertEquals(1, loadedIds.size());
-		assertEquals("uuid2", loadedIds.get(0));
+		assertEquals(member2.getId(), loadedIds.get(0));
 		
 		loadedIds = search("eter");
 		assertEquals(1, loadedIds.size());
-		assertEquals("uuid3", loadedIds.get(0));
+		assertEquals(member3.getId(), loadedIds.get(0));
 	}
 	
 	@Test
 	public void testSearchBySurname() {
 		List<String> loadedIds = search("PaN");
 		assertEquals(1, loadedIds.size());
-		assertEquals("uuid3", loadedIds.get(0));
+		assertEquals(member3.getId(), loadedIds.get(0));
 		
 		loadedIds = search("GROZE");
 		assertEquals(1, loadedIds.size());
-		assertEquals("uuid2", loadedIds.get(0));
+		assertEquals(member2.getId(), loadedIds.get(0));
 	}
 	
 	@Test
 	public void testSearchByAddress() {
 		List<String> loadedIds = search("   Carlto   vic    ");
 		assertEquals(2, loadedIds.size());
-		assertTrue(loadedIds.contains("uuid1"));
-		assertTrue(loadedIds.contains("uuid3"));
+		assertTrue(loadedIds.contains(member1.getId()));
+		assertTrue(loadedIds.contains(member3.getId()));
 	}
 	
 	@Test
 	public void testSearchByEmail() {
 		List<String> loadedIds = search("@gmail");
 		assertEquals(2, loadedIds.size());
-		assertTrue(loadedIds.contains("uuid1"));
-		assertTrue(loadedIds.contains("uuid3"));
+		assertTrue(loadedIds.contains(member1.getId()));
+		assertTrue(loadedIds.contains(member3.getId()));
 		
 		loadedIds = search("   g@coolio.com ");
 		assertEquals(1, loadedIds.size());
-		assertTrue(loadedIds.contains("uuid2"));
+		assertTrue(loadedIds.contains(member2.getId()));
 	}
 	
 	@Test
 	public void testSearchByMultipleCriteria() {
 		List<String> loadedIds = search("   Carlto   vic   18800-1    ");
 		assertEquals(1, loadedIds.size());
-		assertTrue(loadedIds.contains("uuid1"));
+		assertTrue(loadedIds.contains(member1.getId()));
 		
-		loadedIds = search("   uuid   @gmail   18800- ");
+		loadedIds = search("     @gmail   18800- ");
 		assertEquals(2, loadedIds.size());
-		assertTrue(loadedIds.contains("uuid1"));
-		assertTrue(loadedIds.contains("uuid3"));
+		assertTrue(loadedIds.contains(member1.getId()));
+		assertTrue(loadedIds.contains(member3.getId()));
 	}
 	
 	@Test

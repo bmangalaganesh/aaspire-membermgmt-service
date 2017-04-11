@@ -41,9 +41,8 @@ public class Member {
 	@Column(name = "phone_number")
 	private String phoneNumber;
 
-	public Member(String id, String title, String givenName, String surname, Date dateOfBirth, MemberStatus status,
+	public Member(String title, String givenName, String surname, Date dateOfBirth, MemberStatus status,
 			String plan, String email, Address address, String phoneNumber) {
-		setId(id);
 		setTitle(title);
 		setGivenName(givenName);
 		setSurname(surname);

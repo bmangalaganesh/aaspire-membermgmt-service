@@ -28,8 +28,7 @@ public class Address {
 
 	private String country;
 
-	public Address(String id, String line1, String line2, String suburb, State state, String postCode, String country) {
-		setId(id);
+	public Address(String line1, String line2, String suburb, State state, String postCode, String country) {
 		setLine1(line1);
 		setLine2(line2);
 		setSuburb(suburb);
