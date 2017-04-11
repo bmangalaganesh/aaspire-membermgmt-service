@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
@@ -14,6 +15,7 @@ import javax.persistence.OneToOne;
 public class Member {
 
 	@Id
+	@GeneratedValue
 	private String id;
 
 	private String title;
