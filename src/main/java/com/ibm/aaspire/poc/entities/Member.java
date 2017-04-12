@@ -1,5 +1,6 @@
 package com.ibm.aaspire.poc.entities;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 
@@ -52,8 +53,11 @@ public class Member {
 	@Column(name = "last_employer")
 	private String lastEmployer;
 
+	@Column(name = "account_balance")
+	private BigDecimal accountBalance;
+
 	public Member(String title, String givenName, String surname, Date dateOfBirth, MemberStatus status, String plan,
-			String email, Address address, String phoneNumber, String lastEmployer) {
+			String email, Address address, String phoneNumber, String lastEmployer, BigDecimal accountBalance) {
 		setTitle(title);
 		setGivenName(givenName);
 		setSurname(surname);
@@ -64,11 +68,20 @@ public class Member {
 		setAddress(address);
 		setPhoneNumber(phoneNumber);
 		setLastEmployer(lastEmployer);
+		setAccountBalance(accountBalance);
 	}
 
 	public Member() {
 	}
 
+	public BigDecimal getAccountBalance() {
+		return accountBalance;
+	}
+
+	public void setAccountBalance(BigDecimal accountBalance) {
+		this.accountBalance = accountBalance;
+	}
+	
 	public String getTitle() {
 		return title;
 	}

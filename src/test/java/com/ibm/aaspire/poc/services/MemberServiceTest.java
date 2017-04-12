@@ -3,6 +3,7 @@ package com.ibm.aaspire.poc.services;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.junit.Before;
@@ -44,7 +45,9 @@ public class MemberServiceTest {
 				null, 
 				"jj@gmail.com",
 				new Address("Carlton North", null, "Carlton", VIC, null, null), 
-				"18800-1", "PWC"));
+				"18800-1", 
+				"PWC",
+				BigDecimal.ZERO));
 
 		member2 = repo.save(new Member("Mr", 
 				"Nikolay", 
@@ -54,7 +57,9 @@ public class MemberServiceTest {
 				null, 
 				"nik-g@coolio.com",
 				null, 
-				"18800-2", "Melbourne Water"));
+				"18800-2", 
+				"Melbourne Water",
+				BigDecimal.ZERO));
 
 		member3 = repo.save(new Member(null, 
 				"Peter", 
@@ -64,7 +69,9 @@ public class MemberServiceTest {
 				null, 
 				"pp@gmail.com",
 				new Address("765 Brunswick", null, "Carlton", VIC, null, null), 
-				"18800-3", "Australian Super"));	
+				"18800-3", 
+				"Australian Super",
+				BigDecimal.ZERO));	
 	}
 	
 	@Test
