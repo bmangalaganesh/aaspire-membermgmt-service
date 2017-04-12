@@ -44,7 +44,7 @@ public class MemberServiceTest {
 				null, 
 				"jj@gmail.com",
 				new Address("Carlton North", null, "Carlton", VIC, null, null), 
-				"18800-1"));
+				"18800-1", "PWC"));
 
 		member2 = repo.save(new Member("Mr", 
 				"Nikolay", 
@@ -54,7 +54,7 @@ public class MemberServiceTest {
 				null, 
 				"nik-g@coolio.com",
 				null, 
-				"18800-2"));
+				"18800-2", "Melbourne Water"));
 
 		member3 = repo.save(new Member(null, 
 				"Peter", 
@@ -64,7 +64,7 @@ public class MemberServiceTest {
 				null, 
 				"pp@gmail.com",
 				new Address("765 Brunswick", null, "Carlton", VIC, null, null), 
-				"18800-3"));	
+				"18800-3", "Australian Super"));	
 	}
 	
 	@Test

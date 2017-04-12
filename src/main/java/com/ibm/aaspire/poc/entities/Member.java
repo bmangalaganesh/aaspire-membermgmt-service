@@ -1,6 +1,7 @@
 package com.ibm.aaspire.poc.entities;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -17,8 +19,8 @@ import org.hibernate.annotations.GenericGenerator;
 public class Member {
 
 	@Id
-	@GeneratedValue(generator="system-uuid")
-	@GenericGenerator(name="system-uuid", strategy = "uuid")
+	@GeneratedValue(generator = "system-uuid")
+	@GenericGenerator(name = "system-uuid", strategy = "uuid")
 	private String id;
 
 	private String title;
@@ -38,14 +40,20 @@ public class Member {
 
 	private String email;
 
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
 	private Address address;
 
 	@Column(name = "phone_number")
 	private String phoneNumber;
 
-	public Member(String title, String givenName, String surname, Date dateOfBirth, MemberStatus status,
-			String plan, String email, Address address, String phoneNumber) {
+	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+	private List<IdentityInfo> identities;
+
+	@Column(name = "last_employer")
+	private String lastEmployer;
+
+	public Member(String title, String givenName, String surname, Date dateOfBirth, MemberStatus status, String plan,
+			String email, Address address, String phoneNumber, String lastEmployer) {
 		setTitle(title);
 		setGivenName(givenName);
 		setSurname(surname);
@@ -55,8 +63,9 @@ public class Member {
 		setEmail(email);
 		setAddress(address);
 		setPhoneNumber(phoneNumber);
+		setLastEmployer(lastEmployer);
 	}
-	
+
 	public Member() {
 	}
 
@@ -138,5 +147,21 @@ public class Member {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public List<IdentityInfo> getIdentities() {
+		return identities;
+	}
+
+	public void setIdentities(List<IdentityInfo> identities) {
+		this.identities = identities;
+	}
+
+	public String getLastEmployer() {
+		return lastEmployer;
+	}
+
+	public void setLastEmployer(String lastEmployer) {
+		this.lastEmployer = lastEmployer;
 	}
 }
