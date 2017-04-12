@@ -32,17 +32,14 @@ public class MemberController {
 		return memberService.search(search);
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@GetMapping("/members/{id}")
-	public @ResponseBody ResponseEntity  getAMemberInfo(@PathVariable(value = "id", required=true) String memberId) {
-		
+	public @ResponseBody ResponseEntity<Member> getAMemberInfo(@PathVariable(value = "id", required=true) String memberId) {
 		Member theMember =  memberService.getAMemberInfo(memberId);
 		
 		if (theMember == null){
-			return new ResponseEntity(HttpStatus.NOT_FOUND);
-		}
-		else{
-			return new ResponseEntity(theMember, HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<>(theMember, HttpStatus.OK);
 		}
 	}
 	
