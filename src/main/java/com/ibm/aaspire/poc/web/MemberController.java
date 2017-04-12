@@ -1,6 +1,8 @@
 package com.ibm.aaspire.poc.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +31,22 @@ public class MemberController {
 	public Iterable<Member> getMembers(@RequestParam(value = "search", required = false) String search) {
 		return memberService.search(search);
 	}
+	
+	@SuppressWarnings("rawtypes")
+	@GetMapping("/members/{id}")
+	public @ResponseBody ResponseEntity  getAMemberInfo(@PathVariable(value = "id", required=true) String memberId) {
+		
+		Member theMember =  memberService.getAMemberInfo(memberId);
+		
+		if (theMember == null){
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
+		}
+		else{
+			return new ResponseEntity(theMember, HttpStatus.OK);
+		}
+	}
+	
+	
 	
 	@RequestMapping(value = "/members/{id}", method = RequestMethod.PUT)
 	public @ResponseBody Member updateMember(@RequestBody Member member, @PathVariable(value = "id", required=true) String id) {

@@ -62,4 +62,11 @@ public class MemberService {
 				"LOWER(a.suburb) LIKE :match OR "+
 				"LOWER(a.state) LIKE :match)").replaceAll("match", termName);
 	}
+
+	/*
+	 * Get the details for the specified memberId 
+	 */
+	public Member getAMemberInfo(String memberId) {
+		return repo.findOne(memberId);
+	}
 }
