@@ -17,6 +17,7 @@
 						"exec": [
 							"tests[\"Status code is 200\"] = responseCode.code === 200;",
 							"",
+							"var jsonData = JSON.parse(responseBody);",
 							"tests[\"Number of members returned\"] = jsonData.length == 10;",
 							"",
 							"//console.log(\"Value of attribute is:\"+ jsonData[0].id);",
