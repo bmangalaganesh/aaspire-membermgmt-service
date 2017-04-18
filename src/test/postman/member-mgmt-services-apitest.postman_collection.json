@@ -1,0 +1,93 @@
+{
+	"variables": [],
+	"info": {
+		"name": "member-mgmt-services-apitest",
+		"_postman_id": "43ee344a-46b9-8601-2769-640676659bf1",
+		"description": "Simple tests to validate the APIs of member-mgmt-services",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Retrieve all members",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"tests[\"Number of members returned\"] = jsonData.length == 10;",
+							"",
+							"//console.log(\"Value of attribute is:\"+ jsonData[0].id);",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://{{domain-name}}/members",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get member details for member with ID 201",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"First element contains the ID\"] = jsonData.id == 201;",
+							"tests[\"First element contains the Title\"] = jsonData.title == 'Mr';",
+							"tests[\"First element contains the Given Name\"] = jsonData.givenName == 'Eloy';",
+							"tests[\"First element contains the Surname\"] = jsonData.surname == 'Abbott';",
+							"",
+							"",
+							"tests[\"First element has 2 identities\"] = jsonData.identities.length == 2;",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://{{domain-name}}/members/201",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Get member details for memberID:201"
+			},
+			"response": []
+		},
+		{
+			"name": "Attempt to get the member details for a member that does not exist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 404\"] = responseCode.code === 404;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://{{domain-name}}/members/2010",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "An unknown membmerID search should return a 404"
+			},
+			"response": []
+		}
+	]
+}
