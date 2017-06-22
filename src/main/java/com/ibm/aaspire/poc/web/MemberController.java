@@ -23,33 +23,46 @@ public class MemberController {
 
 	@Autowired
 	private MemberRepository repo;
-	
+
 	@Autowired
 	private MemberService memberService;
 
 	@GetMapping("/members")
-	public Iterable<Member> getMembers(@RequestParam(value = "search", required = false) String search) {
-		return memberService.search(search);
-	}
-	
-	@GetMapping("/members/{id}")
-	public @ResponseBody ResponseEntity<Member> getAMemberInfo(@PathVariable(value = "id", required=true) String memberId) {
-		Member theMember =  memberService.getAMemberInfo(memberId);
+	public @ResponseBody ResponseEntity<Iterable<Member>> getMembers(@RequestParam(value = "search", required = false) String search) {
+
+		Iterable<Member> resultList = memberService.search(search);
+
+		// See what the size of the Iterable is. If it is more than zero then return the iterable else return a 404..
+		long size = resultList.spliterator().getExactSizeIfKnown();
+
+		//System.out.println("The size of the iterable is:"+ size);
 		
-		if (theMember == null){
+		if (size > 0) {
+			return new ResponseEntity<>(resultList, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@GetMapping("/members/{id}")
+	public @ResponseBody ResponseEntity<Member> getAMemberInfo(
+			@PathVariable(value = "id", required = true) String memberId) {
+		Member theMember = memberService.getAMemberInfo(memberId);
+
+		if (theMember == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else {
 			return new ResponseEntity<>(theMember, HttpStatus.OK);
 		}
 	}
-	
-	
-	
+
 	@RequestMapping(value = "/members/{id}", method = RequestMethod.PUT)
-	public @ResponseBody Member updateMember(@RequestBody Member member, @PathVariable(value = "id", required=true) String id) {
-		Preconditions.checkArgument(member.getId() == null || member.getId() == id, "Id should either be missing or match the URL.");
+	public @ResponseBody Member updateMember(@RequestBody Member member,
+			@PathVariable(value = "id", required = true) String id) {
+		Preconditions.checkArgument(member.getId() == null || member.getId() == id,
+				"Id should either be missing or match the URL.");
 		Preconditions.checkNotNull(repo.findOne(id), "Use POST if an entity with the Id exists.");
-		
+
 		member.setId(id);
 		return repo.save(member);
 	}
@@ -58,12 +71,13 @@ public class MemberController {
 	public @ResponseBody Member addMember(@RequestBody Member member) {
 		return repo.save(member);
 	}
-	
+
 	@RequestMapping(value = "/members/{id}/address", method = RequestMethod.PUT)
-	public @ResponseBody Member updateAddress(@RequestBody Address address, @PathVariable(value = "id", required=true) String id) {
+	public @ResponseBody Member updateAddress(@RequestBody Address address,
+			@PathVariable(value = "id", required = true) String id) {
 		Member member = repo.findOne(id);
 		Preconditions.checkNotNull(repo.findOne(id), "Unknown member.");
-		
+
 		member.setAddress(address);
 		return repo.save(member);
 	}
