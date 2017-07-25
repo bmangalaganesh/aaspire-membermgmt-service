@@ -19,6 +19,14 @@ spec:
         #imagePullPolicy: Never        
         ports:
         - containerPort: 8080
+        #Environment variables that are available to the container
+        #Secret Name is the binding-<Name-of-Bluemix-Service
+        env:
+          - name: MEMBER_SERVICES_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: binding-memberservices-postgres
+                key: binding
 ---
 apiVersion: v1
 kind: Service
@@ -29,9 +37,9 @@ metadata:
 spec:
   type: NodePort
   ports:
-    # the port that this service should serve on
+    #the port that this service should serve on
     - port: 8080
-  # label keys and values that must match in order to receive traffic for this service
+    #label keys and values that must match in order to receive traffic for this service
   selector:
     app: member-mgmt
     
