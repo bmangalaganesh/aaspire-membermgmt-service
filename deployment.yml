@@ -27,7 +27,7 @@ spec:
               secretKeyRef:
                 name: binding-memberservices-postgres
                 key: binding
-            name: SPRING_PROFILES_ACTIVE
+          - name: SPRING_PROFILES_ACTIVE
             #This value would be updated by the deployment script
             #e.g cat deployment.yml | sed s/\$\$THE_ACTIVE_SPRING_PROFILE/dev/ | kubectl create -f
             value: $$THE_ACTIVE_SPRING_PROFILE
