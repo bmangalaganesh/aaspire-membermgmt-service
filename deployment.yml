@@ -1,13 +1,14 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: member-mgmt-app
+  name: member-mgmt-app-$$APP_PHASE
 spec:
   replicas: 1
   template:
     metadata:
       labels:
         app: member-mgmt
+        phase: $$APP_PHASE
     spec:
       containers:
       - name: aaspire-member-mgmt
