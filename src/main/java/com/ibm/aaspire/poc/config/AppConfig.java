@@ -37,6 +37,7 @@ public class AppConfig {
 
 		// Extract the JDBC URL from the environment (for Docker and Kubernetes
 		// environment)
+	    //MEMBER_SERVICES_DATABASE is the name of the environment variable in Kube deployment manifest file
 		String memberDatabaseSecrets = System.getenv("MEMBER_SERVICES_DATABASE");
 
 		if (memberDatabaseSecrets != null) {
@@ -50,7 +51,6 @@ public class AppConfig {
 			Map<String, Object> jsonMap = parser.parseMap(memberDatabaseSecrets);
 
 			dbUrl = jsonMap.get("uri").toString();
-			System.out.println("Postgres URL is:" + dbUrl);
 
 		} else {
 			logger.info("Extracting info from VCAP_SERVICES. This app is likely deployed as a CF App");
@@ -64,14 +64,19 @@ public class AppConfig {
 			dbUrl = creds.get("uri").toString();
 		}
 
+		// Throw an error if dbUrl is null
+		if (dbUrl == null) {
+			throw new RuntimeException(
+					"A DBURL was expect. Possibly an error occured in extracting this info from either VCAP or K8S environment...");
+		}
 		// Do the parsing activity here..
 		String[] parts = dbUrl.split("(://|@)");
 		String[] userAndPass = parts[1].split(":");
 		String user = userAndPass[0];
 		String pass = userAndPass[1];
 		String url = parts[2];
-		
-		logger.info("Database URL that is extracted from the environment (VCAP or Kubernetes is: "+ url);
+
+		logger.info("Database URL that is extracted from the environment (VCAP or Kubernetes is: " + url);
 
 		DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
 		dataSourceBuilder.url(protocol + "://" + url);
